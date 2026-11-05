@@ -126,8 +126,10 @@ public class LocationMetadataUtils {
             String orderByClause = FileColumns._ID + " DESC ";
             try (Cursor c = db.query(Files.TABLE, new String[]{FileColumns._ID}, null, null, null,
                     null, orderByClause, /* limit */ "1")) {
-                c.moveToFirst();
-                return c.getLong(0);
+                if (c != null && c.moveToFirst()) {
+                    return c.getLong(0);
+                }
+                return 0L;
             }
         });
 
